@@ -1,0 +1,36 @@
+version: '3'
+services:
+  age:
+    image: apache/age
+    container_name: age
+    environment:
+      POSTGRES_PASSWORD: snowplow
+      POSTGRES_USER: snowplow
+      POSTGRES_DB: snowplow
+    ports:
+      - "5431:5432"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+  age_viewer:
+    image: pg:age_viewer
+    container_name: age_viewer
+    build:
+      context: ./age-viewer
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    command: npm run start
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
+
