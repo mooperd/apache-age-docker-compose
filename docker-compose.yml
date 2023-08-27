@@ -7,6 +7,9 @@ services:
       POSTGRES_PASSWORD: snowplow
       POSTGRES_USER: snowplow
       POSTGRES_DB: snowplow
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes: 
+      - ~/postgres-data:/var/lib/postgresql/data
     ports:
       - "5431:5432"
     dns:
@@ -33,4 +36,3 @@ services:
       PGADMIN_DEFAULT_PASSWORD: root
     ports:
       - "5050:80"
-
